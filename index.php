@@ -8,4 +8,3 @@ $userInfo = $auth->checkToken();
 
 
 echo 'index';
-echo '  -  '.$_SESSION['token'];
