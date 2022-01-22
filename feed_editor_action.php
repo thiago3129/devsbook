@@ -22,9 +22,8 @@ if ( $body ) {
 
   $postDao->insert( $newPost );
 
-} else {
+}
 
   header ( "Location: ".$base );
   exit;
 
-}

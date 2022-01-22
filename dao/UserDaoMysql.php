@@ -1,6 +1,8 @@
 <?php
 
 require_once './models/User.php';
+require_once './dao/UsersRelationDaoMysql.php';
+require_once './dao/PostDaoMysql.php';
 
 class UserDaoMysql implements UserDao {
 
@@ -10,7 +12,7 @@ class UserDaoMysql implements UserDao {
     $this->pdo = $driver;
   }
 
-  private function generateUser( $array ) {
+  private function generateUser( $array, $full = false ) {
 
     $u = new User();
     
@@ -24,6 +26,36 @@ class UserDaoMysql implements UserDao {
     $u->avatar = $array['avatar'] ?? '';
     $u->cover = $array['cover'] ?? '';
     $u->token = $array['token'] ?? '';
+
+    if ( $full ) {
+
+
+      $urDaoMysql = new UsersRelationDaoMysql ( $this->pdo );
+      $postDaoMysql = new PostDaoMysql ( $this->pdo );
+
+      //Followers = Quem segue o usuário
+      $u->followers = $urDaoMysql->getFollowers ( $u->id );
+
+      foreach ( $u->followers as $key => $follower_id ) {
+
+        $newUser = $this->findById ( $follower_id );
+        $u->followers[ $key ] = $newUser;
+
+      }
+      //followins = Quem o usuario segue
+      $u->following = $urDaoMysql->getFollowing ( $u->id );
+
+      foreach ( $u->following as $key => $following_id ) {
+
+        $newUser = $this->findById ( $following_id );
+        $u->following [ $key ] = $newUser;
+
+      }
+
+      //fotos
+      $u->photos = $postDaoMysql->getPhotosFrom ( $u->id );
+
+    }
 
     
     return $u;
@@ -79,7 +111,38 @@ class UserDaoMysql implements UserDao {
 
   }
 
-  public function findById ( $id ) {
+  public function findByName ( $name ) {
+
+    $array = [];
+
+    if ( !empty( $name ) ) {
+
+      //SELECT * FROM users WHERE name LIKE %NOME%;
+
+      $sql = $this->pdo->prepare("SELECT * FROM users WHERE name LIKE :name");
+      $sql->bindValue( ':name', '%'.$name.'%' );
+      $sql->execute();
+
+      if ( $sql->rowCount() > 0 ) {
+
+        $data = $sql->fetchAll( PDO::FETCH_ASSOC );
+        foreach ( $data as $item ) {
+
+          $array[] = $this->generateUser ( $item );
+
+        }
+        
+
+      }
+
+    }
+
+    return $array;
+
+
+  }
+
+  public function findById ( $id, $full = false ) {
 
     if ( !empty( $id ) ) {
 
@@ -90,7 +153,7 @@ class UserDaoMysql implements UserDao {
       if ( $sql->rowCount() > 0 ) {
 
         $data = $sql->fetch( PDO::FETCH_ASSOC );
-        $user = $this->generateUser( $data );
+        $user = $this->generateUser( $data, $full );
 
         return $user;
 
