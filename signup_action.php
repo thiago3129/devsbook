@@ -12,9 +12,7 @@ if ( $name && $email && $password && $birthdate ) {
 
   $auth = new Auth( $pdo, $base );
 
-  $birthdate = explode( '/', $birthdate );
-
- 
+  $birthdate = explode( '/', $birthdate ); 
  
   if ( count($birthdate) != 3 ) {
 
