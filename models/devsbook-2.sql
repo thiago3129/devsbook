@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Tempo de geração: 13-Jan-2022 às 09:55
+-- Tempo de geração: 02-Fev-2022 às 16:46
 -- Versão do servidor: 10.4.22-MariaDB
 -- versão do PHP: 7.4.26
 
@@ -33,7 +33,7 @@ CREATE TABLE `postcomments` (
   `id_user` int(11) NOT NULL,
   `create_at` datetime NOT NULL,
   `body` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -46,7 +46,14 @@ CREATE TABLE `postlikes` (
   `id_post` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
   `create_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `postlikes`
+--
+
+INSERT INTO `postlikes` (`id`, `id_post`, `id_user`, `create_at`) VALUES
+(1, 10, 12, '2022-01-29 06:17:28');
 
 -- --------------------------------------------------------
 
@@ -56,10 +63,27 @@ CREATE TABLE `postlikes` (
 
 CREATE TABLE `posts` (
   `id` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
   `type` varchar(20) NOT NULL,
-  `create_at` datetime NOT NULL,
+  `created_at` datetime NOT NULL,
   `body` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `posts`
+--
+
+INSERT INTO `posts` (`id`, `id_user`, `type`, `created_at`, `body`) VALUES
+(1, 14, 'text', '2022-01-16 09:55:00', 'Opa, tudo bem?'),
+(2, 14, 'text', '2022-01-16 22:16:48', 'na morte da bezerra'),
+(3, 14, 'text', '2022-01-17 10:01:49', 'nao funcionou'),
+(4, 12, 'text', '2022-01-18 09:57:37', 'alguma coisa'),
+(5, 12, 'text', '2022-01-19 09:25:01', 'novo post para testar\r\nse esta pulando linha\r\nok'),
+(6, 12, 'text', '2022-01-19 09:28:25', 'teste'),
+(7, 12, 'text', '2022-01-19 09:30:11', 'outro teste'),
+(8, 12, 'text', '2022-01-19 09:30:33', 'teste de linha\r\noutra linha\r\nmais uma linha'),
+(9, 12, 'text', '2022-01-19 09:30:48', 'agora 2 linhas\r\naqui vai'),
+(10, 14, 'text', '2022-01-25 23:55:11', 'de novo na morte da bezerra');
 
 -- --------------------------------------------------------
 
@@ -69,9 +93,17 @@ CREATE TABLE `posts` (
 
 CREATE TABLE `userrelation` (
   `id` int(11) NOT NULL,
-  `user_from` varchar(100) NOT NULL,
-  `user_to` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `user_from` int(11) NOT NULL,
+  `user_to` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `userrelation`
+--
+
+INSERT INTO `userrelation` (`id`, `user_from`, `user_to`) VALUES
+(1, 12, 14),
+(2, 14, 12);
 
 -- --------------------------------------------------------
 
@@ -85,19 +117,20 @@ CREATE TABLE `users` (
   `email` varchar(100) NOT NULL,
   `password` varchar(200) NOT NULL,
   `birthdate` date NOT NULL,
-  `city` varchar(100) DEFAULT NULL,
-  `work` varchar(100) DEFAULT NULL,
-  `avatar` varchar(100) DEFAULT NULL,
+  `city` varchar(100) NOT NULL,
+  `work` varchar(100) NOT NULL,
+  `avatar` varchar(100) DEFAULT 'default.jpg',
   `cover` varchar(100) DEFAULT NULL,
   `token` varchar(256) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `users`
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `birthdate`, `city`, `work`, `avatar`, `cover`, `token`) VALUES
-(10, 'thiagosp', 'thiago@ggg.com', '$2y$10$yNnsa5o2uUk5wMuBSDg7NOaQIWOcVpZAVHBYNdv8TYfP001kArGla', '1984-09-29', NULL, NULL, NULL, NULL, 'd1fb4edd3d4cfaf166a5286c28e1d2d9');
+(12, 'thiago pinheiro', 'thiago@hhh.com', '$2y$10$UUmGR8z7mNKUxG08h8rW1up6JZRt4TtR0YKUyahd4I7zRdULEi8Ga', '1984-09-29', 'são paulo', 'lamace', '50a213c372ab4f545476187c15426431jpg', '7bcd9d8e7ad7e6fb5512f32ee9f155dajpg', '3df80cda1ae2a2fd28342d95df06f623'),
+(14, 'elisangela my love', 'elisangela@querida.com', '$2y$10$FX5eXIbKw6TWWNdOENvG8eeQ0/sWNjMOV4LyKQ0GnGe6Dg4PNaiBu', '1983-05-31', '', '', 'default.jpg', 'cover.jpg', 'a71dd3d2a83adddc97483b13037f0bd9');
 
 --
 -- Índices para tabelas despejadas
@@ -147,25 +180,25 @@ ALTER TABLE `postcomments`
 -- AUTO_INCREMENT de tabela `postlikes`
 --
 ALTER TABLE `postlikes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de tabela `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de tabela `userrelation`
 --
 ALTER TABLE `userrelation`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de tabela `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
