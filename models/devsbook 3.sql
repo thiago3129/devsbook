@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Tempo de geração: 02-Fev-2022 às 16:46
+-- Tempo de geração: 03-Fev-2022 às 23:21
 -- Versão do servidor: 10.4.22-MariaDB
 -- versão do PHP: 7.4.26
 
@@ -45,15 +45,18 @@ CREATE TABLE `postlikes` (
   `id` int(11) NOT NULL,
   `id_post` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
-  `create_at` datetime NOT NULL
+  `created_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `postlikes`
 --
 
-INSERT INTO `postlikes` (`id`, `id_post`, `id_user`, `create_at`) VALUES
-(1, 10, 12, '2022-01-29 06:17:28');
+INSERT INTO `postlikes` (`id`, `id_post`, `id_user`, `created_at`) VALUES
+(3, 3, 12, '2022-02-03 18:26:23'),
+(4, 2, 12, '2022-02-03 18:26:38'),
+(5, 9, 14, '2022-02-03 18:39:17'),
+(6, 10, 12, '2022-02-03 18:59:33');
 
 -- --------------------------------------------------------
 
@@ -83,7 +86,8 @@ INSERT INTO `posts` (`id`, `id_user`, `type`, `created_at`, `body`) VALUES
 (7, 12, 'text', '2022-01-19 09:30:11', 'outro teste'),
 (8, 12, 'text', '2022-01-19 09:30:33', 'teste de linha\r\noutra linha\r\nmais uma linha'),
 (9, 12, 'text', '2022-01-19 09:30:48', 'agora 2 linhas\r\naqui vai'),
-(10, 14, 'text', '2022-01-25 23:55:11', 'de novo na morte da bezerra');
+(10, 14, 'text', '2022-01-25 23:55:11', 'de novo na morte da bezerra'),
+(11, 12, 'text', '2022-02-03 23:15:52', 'Hoje consegui superar meus limites by \r\nYami Sukehiro capitão dos black bulls');
 
 -- --------------------------------------------------------
 
@@ -129,8 +133,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `birthdate`, `city`, `work`, `avatar`, `cover`, `token`) VALUES
-(12, 'thiago pinheiro', 'thiago@hhh.com', '$2y$10$UUmGR8z7mNKUxG08h8rW1up6JZRt4TtR0YKUyahd4I7zRdULEi8Ga', '1984-09-29', 'são paulo', 'lamace', '50a213c372ab4f545476187c15426431jpg', '7bcd9d8e7ad7e6fb5512f32ee9f155dajpg', '3df80cda1ae2a2fd28342d95df06f623'),
-(14, 'elisangela my love', 'elisangela@querida.com', '$2y$10$FX5eXIbKw6TWWNdOENvG8eeQ0/sWNjMOV4LyKQ0GnGe6Dg4PNaiBu', '1983-05-31', '', '', 'default.jpg', 'cover.jpg', 'a71dd3d2a83adddc97483b13037f0bd9');
+(12, 'thiago pinheiro', 'thiago@hhh.com', '$2y$10$UUmGR8z7mNKUxG08h8rW1up6JZRt4TtR0YKUyahd4I7zRdULEi8Ga', '1984-09-29', 'são paulo', 'lamace', '50a213c372ab4f545476187c15426431jpg', '7bcd9d8e7ad7e6fb5512f32ee9f155dajpg', 'eef30309a75862a183a6967af32db2b9'),
+(14, 'elisangela my love', 'elisangela@querida.com', '$2y$10$FX5eXIbKw6TWWNdOENvG8eeQ0/sWNjMOV4LyKQ0GnGe6Dg4PNaiBu', '1983-05-31', '', '', 'be3645341c79979f3cfdb9b1f0fea6e8jpg', 'cover.jpg', '2a1712363d2f12aeadc503e089627100');
 
 --
 -- Índices para tabelas despejadas
@@ -180,13 +184,13 @@ ALTER TABLE `postcomments`
 -- AUTO_INCREMENT de tabela `postlikes`
 --
 ALTER TABLE `postlikes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de tabela `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de tabela `userrelation`
