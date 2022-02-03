@@ -16,7 +16,7 @@ require_once 'feed-item-script.php';
     <div class="box-body">
         <div class="feed-item-head row mt-20 m-width-20">
             <div class="feed-item-head-photo">
-                <a href="<?= $base; ?>/perfil.php?id=<?= $item->user->id; ?>"><img src="<?= $base; ?>/media/avatars/default.jpg" /></a>
+                <a href="<?= $base; ?>/perfil.php?id=<?= $item->user->id; ?>"><img src="<?= $base; ?>/media/avatars/<?= $item->user->avatar; ?>" /></a>
             </div>
             <div class="feed-item-head-info">
                 <a href="<?= $base; ?>/perfil.php?id=<?= $item->user->id; ?>"><span class="fidi-name"><?= $item->user->name; ?></span></a>

@@ -38,7 +38,7 @@ class PostLikeDaoMysql implements PostLikeDao {
     $sql->bindValue ( ':id_user', $id_user );
     $sql->execute ();
 
-    if ( $sql->rowCount () > 0 ) {
+    if ( $sql->rowCount() > 0 ) {
 
       return true;
 
@@ -51,19 +51,20 @@ class PostLikeDaoMysql implements PostLikeDao {
   }
   public function likeToggle ( $id_post, $id_user ) {
 
-    if ( $this->isLiked ( $id_post, $id_user ) ) {
-
+    if ( $this->isLiked( $id_post, $id_user ) ) {
      
       // delete
-      $sql = $this->pdo->prepare ( "DELETE FROM postlikes
-      WHERE id_post = :id_post AND id_user = :id_user" );
+      $sql = $this->pdo->prepare ( 'DELETE FROM postlikes
+      WHERE id_post = :id_post AND id_user = :id_user' );
      
      } else {
      
       // update
-      $sql = $this->pdo->prepare ("INSERT INTO postlikes
-      (id_post, id_user, created_at) VALUES 
-      (:id_post, :id_user, NOW())");
+      $sql = $this->pdo->prepare ('INSERT INTO postlikes (
+        id_post, id_user, created_at
+        ) VALUES (
+          :id_post, :id_user, NOW()
+          )');
       
     }
 
