@@ -12,6 +12,25 @@ class UsersRelationDaoMysql implements UsersRelationDAO {
 
   public function insert ( UsersRelation $u ) {
 
+    $sql = $this->pdo->prepare ( "INSERT INTO userrelation
+    ( user_from, user_to ) VALUES
+    ( :user_from, :user_to )" );
+
+    $sql->bindValue( ':user_from', $u->user_from );
+    $sql->bindValue( ':user_to', $u->user_to );
+    $sql->execute();
+
+  }
+
+  public function delete ( UsersRelation $u ) {
+
+    $sql = $this->pdo->prepare ( "DELETE FROM userrelation
+    WHERE user_from = :user_from AND user_to = :user_to");
+
+    $sql->bindValue( ':user_from', $u->user_from );
+    $sql->bindValue( ':user_to', $u->user_to );
+    $sql->execute();
+
   }
 
 
@@ -80,7 +99,7 @@ class UsersRelationDaoMysql implements UsersRelationDAO {
 
     } else {
 
-      return false;
+      return false; 
 
     }
 

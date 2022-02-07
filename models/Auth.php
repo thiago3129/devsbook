@@ -26,15 +26,8 @@ public function __construct(PDO $pdo, $base) {
     if ( !empty( $_SESSION['token'] ) ) {
 
       $token = $_SESSION['token'];
-
-     
-
-      
-      
       $user = $this->dao->findByToken( $token );
-
-     
-      
+    
       if ( $user ) {
  
         return $user;

@@ -29,8 +29,19 @@ require_once 'feed-item-script.php';
             </div>
         </div>
         <div class="feed-item-body mt-10 m-width-20">
+<?php
+      
+  switch ( $item->type ) {
+    case 'text': 
+      echo nl2br ( $item->body );
+      break;
 
-           <?= nl2br($item->body); ?>
+    case 'photo':
+      echo '<img src="'.$base.'/media/uploads/'.$item->body.'" />';
+      break;
+  }
+?>
+           
 
         </div>
         <div class="feed-item-buttons row mt-20 m-width-20">

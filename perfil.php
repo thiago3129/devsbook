@@ -84,6 +84,7 @@ require 'partials/menu.php';
                        <a href="follow_action.php?id=<?= $id; ?>" class="button"><?=(!$isFollowing) ? 'Seguir': 'Deixar de seguir'; ?></a>
                     </div>
                 <?php endif; ?>
+               
                     <div class="profile-info-item m-width-20">
                         <div class="profile-info-item-n"><?= count ( $user->followers ); ?></div>
                         <div class="profile-info-item-s">Seguidores</div>
@@ -170,7 +171,9 @@ require 'partials/menu.php';
             <div class="box-header m-10">
                 <div class="box-header-text">
                     Fotos
-                    <span>(<?= count ( $user->photos ); ?>)</span>
+              
+                    <span> ( <?= count($user->photos); ?>) </span>
+                    
                 </div>
                 <div class="box-header-buttons">
                     <a href="<?= $base; ?>/fotos.php?id=<?= $user->id; ?>">ver todos</a>
@@ -178,10 +181,10 @@ require 'partials/menu.php';
             </div>
             <div class="box-body row m-20">
 
-            <?php if ( count ( $user->photos ) >0  ) : ?>
+            <?php if ( count ( $user->photos ) > 0  ) : ?>
 
               <?php foreach ( $user->photos as $key => $item ) : ?>
-
+             
                 <div class="user-photo-item">
                     <a href="#modal-<?= $key; ?>" rel="modal:open">
                         <img src="<?= $base; ?>/media/uploads/<?= $item->body; ?>" />
