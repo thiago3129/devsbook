@@ -72,11 +72,14 @@ class PostDaoMysql implements PostDao {
 
     if ( $sql->rowCount () > 0 ) {
 
+      
       $data = $sql->fetchAll ( PDO::FETCH_ASSOC );
+      
       $array = $this->_postListToObject ( $data, $id_user );
 
     }
 
+   
     return $array;
 
   }
@@ -101,9 +104,11 @@ class PostDaoMysql implements PostDao {
       $data = $sql->fetchAll ( PDO::FETCH_ASSOC );
       //3 - Transformar o resultado em objetos.
       $array = $this->_postListToObject ( $data, $id_user );
+     
     } 
-
+    
       return $array;
+   
 
  
 
@@ -147,7 +152,7 @@ class PostDaoMysql implements PostDao {
 
     }
 
-
+   
     return $posts;
 
   }

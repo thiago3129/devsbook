@@ -46,6 +46,18 @@ $dateFrom = new DateTime ( $user->birthdate );
 $dateTo = new DateTime ( 'today' );
 $user->ageYears = $dateFrom->diff ( $dateTo )->y;
 
+  $foto_feed = $postDao->getHomeFeed ( $id );
+ 
+  $user->photos = $foto_feed;
+ 
+  
+  
+
+ 
+
+
+
+
 
 
 // Pegar o feed do usuário
@@ -173,6 +185,10 @@ require 'partials/menu.php';
                     Fotos
               
                     <span> ( <?= count($user->photos); ?>) </span>
+
+                 
+              
+
                     
                 </div>
                 <div class="box-header-buttons">
