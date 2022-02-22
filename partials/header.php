@@ -1,5 +1,16 @@
 <?php
+
+require_once 'config.php';
+require_once 'models/Auth.php';
+require_once 'dao/PostDaoMysql.php';
+
+
+$auth = new Auth( $pdo, $base );
+$userInfo = $auth->checkToken();
+
   $firstName = current(explode( ' ', $userInfo->name ));
+  
+
 ?>
 <!DOCTYPE html>
 <html>

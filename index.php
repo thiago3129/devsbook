@@ -3,18 +3,32 @@
 require_once 'config.php';
 require_once 'models/Auth.php';
 require_once 'dao/PostDaoMysql.php';
-
+require_once 'partials/header.php';
+require_once 'partials/menu.php';
 
 $auth = new Auth( $pdo, $base );
 $userInfo = $auth->checkToken();
 $activeMenu = 'home';
+//Pegar informções de paginação
+$page = intval(filter_input(INPUT_GET, 'p'));
+    if( $page < 1 ) {
+
+      $page = 1;
+
+    }
+    $page = 1;
+
 
 $postDao = new PostDaoMysql ( $pdo );
-$feed = $postDao->getHomeFeed ( $userInfo->id );
 
+$info = $postDao->getHomeFeed ( $userInfo->id, $page );
 
-require 'partials/header.php';
-require 'partials/menu.php';
+$feed = $info['feed'];
+
+$pages = $info['pages'];
+
+$currentPage = $info['currentPage'];
+
 
 ?>
 
@@ -30,6 +44,13 @@ require 'partials/menu.php';
       
    <?php endforeach; ?>
 
+   <div class="feed-pagination">
+     <?php for ( $q = 0; $q < $pages; $q ++ ) : ?>
+
+      <a class="<?= ($q+1 == $currentPage) ? 'active' : '' ?>" href="<?= $base ?>/?p=<?= $q + 1; ?>"><?= $q + 1; ?></a>
+
+    <?php endfor; ?>
+   </div>
 
 
     </div>
@@ -42,13 +63,14 @@ require 'partials/menu.php';
                   </div>
                 </div>
                  <div class="box-body">
-                   <a href=""><img src="https://alunos.b7web.com.br/media/courses/php-nivel-1.jpg" /></a>
-                   <a href=""><img src="https://alunos.b7web.com.br/media/courses/laravel-nivel-1.jpg" /></a>
+                   <a href=""><img src="https://alunos.b7web.com.br/media/courses/php.jpg" /></a>
+                   <a href=""><img src="https://alunos.b7web.com.br/media/courses/laravel.jpg" /></a>
+                   <a href="https://www.crunchyroll.com/pt-br/demon-slayer-kimetsu-no-yaiba"><img src="<?= $base; ?>/assets/images/dangiro2.jpeg" /></a>
                  </div>
               </div>
               <div class="box">
                 <div class="box-body m-10">
-                   Criado com ❤️ por B7Web
+                   Criado com ❤️ no curso da B7Web
                 </div>
               </div>
     </div>

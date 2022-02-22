@@ -12,22 +12,27 @@ $array = [ 'error' => '' ];
 
 $postDao = new PostDaoMysql ( $pdo );
 
-if ( isset($_FILES[ 'photo' ]) && !empty ( $_FILES[ 'photo' ][ 'tmp_name' ] ) ) {
+if ( isset($_FILES['photo']) && !empty( $_FILES['photo'][ 'tmp_name' ] ) ) {
 
-  $photo = $_FILES[ 'photo' ];
+  $photo = $_FILES['photo'];
 
-  if ( in_array ( $photo[ 'type' ], [ 'image/jpeg', 'image/jpg', 'image/png' ] ) ) {
+  if ( in_array ( $photo['type'], [ 'image/jpeg', 'image/jpg', 'image/png' ] ) ) {
 
     list ( $widthOrig, $heightOrig ) = getimagesize ( $photo[ 'tmp_name' ] );
     $ratio = $widthOrig / $heightOrig;
     
     $newWidth = $maxWidth;
-    $newHeight = $newWidth / $ratio;
+    $newHeight = $maxHeight;
 
-    if ( $newHeight < $maxHeight ) {
+    $ratioMax = $maxWidth / $maxHeight;
 
-      $newHeight = $maxHeight;
+    if ( $ratioMax > $ratio ) {
+
       $newWidth = $newHeight * $ratio;
+
+    } else {
+
+      $newHeight = $newWidth / $ratio;
 
     }
 

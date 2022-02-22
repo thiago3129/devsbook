@@ -16,7 +16,7 @@ if ( $body ) {
   $newPost = new Post ();
 
   $newPost->id_user = $userInfo->id;
- $newPost->type = 'photo';
+  $newPost->type = 'text';
   
   $newPost->created_at = date ( 'Y-m-d H:i:s' );
   $newPost->body = $body;

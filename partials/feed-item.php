@@ -25,30 +25,38 @@ require_once 'feed-item-script.php';
                 <br/>
                 <span class="fidi-date"><?= date ( 'd/m/Y', strtotime ( $item->created_at ) ); ?></span>
             </div>
+            <?php if ($item->mine) : ?>
             <div class="feed-item-head-btn">
                 <img src="<?= $base; ?>/assets/images/more.png" />
+                <div class="feed-item-more-window">
+                  <a href="<?= $base; ?>/excluir_post_action.php?id=<?= $item->id; ?>">Excluir Post</a>
+                </div>
             </div>
+            <?php endif; ?>
         </div>
         <div class="feed-item-body mt-10 m-width-20">
-<?php
-      
-  switch ( $item->type ) {
-    case 'text': 
-      echo nl2br ( $item->body );
-      break;
+              <?php
+                    
+                switch ( $item->type ) {
+                  case 'text': 
+                    echo nl2br( $item->body );
+                    break;
 
-    case 'photo':
-      echo '<img src="'.$base.'/media/uploads/'.$item->body.'" />';
-      break;
-  }
-?>
+                  case 'photo':
+                    echo '<img src="'.$base.'/media/uploads/'.$item->body.'" />';
+                    break;
+                  
+                }
+
+               
+              ?>
            
 
         </div>
         <div class="feed-item-buttons row mt-20 m-width-20">
             <div class="like-btn <?= $item->liked ? 'on' : ''; ?>"><?= $item->likeCount; ?></div>
-            <div class="msg-btn"><?= count ( $item->comments ); ?></div>
-         
+            <div class="msg-btn"><?= count( $item->comments ); ?></div>
+          
 
         </div>
         <div class="feed-item-comments">

@@ -26,6 +26,14 @@ if ( $id != $userInfo->id ) {
   $activeMenu = '';
 
 }
+//Pegar informções de paginação
+$page = intval(filter_input(INPUT_GET, 'p'));
+    if( $page < 1 ) {
+
+      $page = 1;
+
+    }
+    $page = 1;
 
 $postDao = new PostDaoMysql ( $pdo );
 $userDao = new UserDaoMysql ( $pdo );
@@ -46,22 +54,21 @@ $dateFrom = new DateTime ( $user->birthdate );
 $dateTo = new DateTime ( 'today' );
 $user->ageYears = $dateFrom->diff ( $dateTo )->y;
 
-  $foto_feed = $postDao->getHomeFeed ( $id );
- 
-  $user->photos = $foto_feed;
- 
+  //$user->photos = $postDao->getHomeFeed ( $id );
+  $user->photos = $postDao->getPhotosFrom ($id);
   
   
-
+ 
  
 
-
-
-
-
-
-// Pegar o feed do usuário
-$feed = $postDao->getUserFeed ( $id );
+ 
+ 
+ 
+  // Pegar o feed do usuário
+$info = $postDao->getUserFeed ( $id, $page );
+$feed = $info['feed'];
+$pages = $info['pages'];
+$currentPage = $info['currentPage'];
 
 // Verificar se eu sigo este usuário
 $isFollowing = $userRelationDao->isFollowing ( $userInfo->id, $id );
@@ -186,30 +193,27 @@ require 'partials/menu.php';
               
                     <span> ( <?= count($user->photos); ?>) </span>
 
-                 
-              
-
-                    
-                </div>
+                 </div>
                 <div class="box-header-buttons">
                     <a href="<?= $base; ?>/fotos.php?id=<?= $user->id; ?>">ver todos</a>
                 </div>
             </div>
             <div class="box-body row m-20">
 
-            <?php if ( count ( $user->photos ) > 0  ) : ?>
+            <?php if ( count($user->photos) > 0  ) : ?>
 
-              <?php foreach ( $user->photos as $key => $item ) : ?>
-             
+              <?php foreach ( $user->photos as $key => $item ): ?>
+                
+                <?php if($key < 4): ?>
                 <div class="user-photo-item">
-                    <a href="#modal-<?= $key; ?>" rel="modal:open">
+                    <a href="#modal-<?= $key; ?>" data-modal-open>
                         <img src="<?= $base; ?>/media/uploads/<?= $item->body; ?>" />
                     </a>
                     <div id="modal-<?= $key; ?>" style="display:none">
                         <img src="<?= $base; ?>/media/uploads/<?= $item->body; ?>" />
                     </div>
                 </div>
-
+                <?php endif; ?>
 
               <?php endforeach; ?>
 
@@ -235,6 +239,16 @@ require 'partials/menu.php';
           <?php endforeach; ?>
 
 
+          <div class="feed-pagination">
+     <?php for ( $q = 0; $q < $pages; $q ++ ) : ?>
+
+      <a class="<?= ($q+1 == $currentPage) ? 'active' : '' ?>" href="<?= $base ?>/perfil.php?id=<?= $id ;?>&p=<?= $q + 1; ?>"><?= $q + 1; ?></a>
+
+    <?php endfor; ?>
+   </div>
+
+
+
         <?php else: ?>
 
           Não há postagem deste usuário.
@@ -247,6 +261,14 @@ require 'partials/menu.php';
 </div>
 
 </section>
+
+<script>
+  window.onload = function() {
+
+    var modal = new VanillaModal.default();
+
+  };
+</script>
 
 <?php
 require 'partials/footer.php';

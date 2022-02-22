@@ -248,6 +248,24 @@ header .head-side {
   top: -500px;
 }
 
+.feed-pagination a {
+
+  display: inline-block;
+  padding: 7px 10px;
+  border: 1px solid #CCC;
+  margin: 5px;
+  text-decoration: none;
+  color: #000;
+  border-radius: 3px;
+
+}
+.feed-pagination a:hover {
+  background-color: #DDD;
+}
+.feed-pagination a.active {
+  background-color: #FFF;
+}
+
 .banners .box-body {
     margin:0 10px 10px 10px;
 }
@@ -367,6 +385,9 @@ header .head-side {
 }
 .user-photo-item img {
     max-width: 100%;
+}
+.full-user-photos .user-photo-item {
+  max-width: 100%;
 }
 
 .tabs {
@@ -496,6 +517,7 @@ header .head-side {
        padding:0 10px; 
     }
 
+  
     .profile-cover {
         height:150px;
     }
